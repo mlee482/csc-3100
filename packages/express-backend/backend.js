@@ -55,21 +55,16 @@ const deleteUser = (id) => {
   return user;
 }
 
+const matchUser = (name, job) => {
+  return users["users_list"].filter(
+    (user => user["name"] === name && user["job"] === job)
+  );
+}
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
-});
-
-app.get("/users", (req, res) => {
-  const name = req.query.name;
-  if (name != undefined) {
-    let result = findUserByName(name);
-    result = { users_list: result };
-    res.send(result);
-  } else {
-    res.send(users);
-  }
 });
 
 app.get("/users/:id", (req, res) => {
@@ -79,6 +74,23 @@ app.get("/users/:id", (req, res) => {
     res.status(404).send("Resource not found.");
   } else {
     res.send(result);
+  }
+});
+
+app.get("/users", (req, res) => {
+  const name = req.query.name;
+  const job = req.query.job;
+
+  if (name != undefined && job != undefined) {
+    let result = matchUser(name, job);
+    result = { users_list: result };
+    res.send(result);
+  } else if (name != undefined) {
+    let result = findUserByName(name);
+    result = {users_list: result};
+    res.send(result);
+  } else {
+      res.send(users);
   }
 });
 
