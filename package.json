@@ -11,8 +11,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "workspaces": [
-    "packages/*",
-    "express-backend",
-    "react-frontend"
+    "packages/*"
   ]
 }
