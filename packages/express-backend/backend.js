@@ -45,6 +45,16 @@ const addUser = (user) => {
   return user;
 };
 
+const deleteUser = (id) => {
+  const user = findUserById(id);
+  
+  if (user === undefined){
+    return undefined;
+  }
+  users["users_list"] = users["users_list"].filter((user) => user["id"] !== id);
+  return user;
+}
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -77,6 +87,16 @@ app.post("/users", (req, res) => {
   addUser(userToAdd);
   res.send();
 });
+
+app.delete("/users/:id", (req, res) => {
+  const id = req.params["id"];
+  let result = deleteUser(id);
+  if (result === undefined){
+    res.status(404).send("Resource not found.");
+  } else {
+    res.send(result)
+  }
+})
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
