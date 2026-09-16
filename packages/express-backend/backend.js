@@ -64,6 +64,24 @@ const matchUser = (name, job) => {
   );
 }
 
+const generateID = () => {
+  const letters = "abcdefghijklmnopqrstuvwxyz";
+  const numbers = "0123456789";
+
+  let id = "";
+  let i = 0;
+  
+  for (i; i < 3; i++) {
+    id += letters[Math.floor(Math.random() * letters.length)];
+  }
+
+  for (let i = 0; i < 3; i++) {
+    id += numbers[Math.floor(Math.random() * numbers.length)];
+  }
+
+  return id;
+}
+
 app.use(cors());
 
 app.use(express.json());
@@ -100,18 +118,24 @@ app.get("/users", (req, res) => {
 });
 
 app.post("/users", (req, res) => {
-  const userToAdd = req.body;
-  addUser(userToAdd);
-  res.send();
+  const userToAdd = {
+    id: generateID(),
+    name: req.body.name,
+    job: req.body.job
+  };
+
+  addUser(newUser);
+  res.status(201).send();
 });
 
 app.delete("/users/:id", (req, res) => {
   const id = req.params["id"];
   let result = deleteUser(id);
+
   if (result === undefined){
     res.status(404).send("Resource not found.");
   } else {
-    res.send(result)
+    res.status(204).send()
   }
 })
 
