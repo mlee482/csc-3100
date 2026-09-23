@@ -66,7 +66,7 @@ const matchUser = (name, job) => {
 
 const generateID = () => {
   const letters = "abcdefghijklmnopqrstuvwxyz";
-  const numbers = "0123456789";
+  const numbers = Math.random().toString.substring(2, 5);
 
   let id = "";
   let i = 0;
@@ -118,14 +118,14 @@ app.get("/users", (req, res) => {
 });
 
 app.post("/users", (req, res) => {
-  const userToAdd = {
+  const newUser = {
     id: generateID(),
     name: req.body.name,
     job: req.body.job
   };
 
   addUser(newUser);
-  res.status(201).send();
+  res.status(201).send(newUser);
 });
 
 app.delete("/users/:id", (req, res) => {
