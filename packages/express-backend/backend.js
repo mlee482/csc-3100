@@ -66,7 +66,7 @@ const matchUser = (name, job) => {
 
 const generateID = () => {
   const letters = "abcdefghijklmnopqrstuvwxyz";
-  const numbers = Math.random().toString.substring(2, 5);
+  const numbers = Math.random().toString().substring(2, 5);
 
   let id = "";
   let i = 0;
