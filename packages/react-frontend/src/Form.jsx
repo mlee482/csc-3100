@@ -13,7 +13,7 @@ function Form(props) {
 
     }
 
-function submitForm(event) {
+function submitForm() {
   props.handleSubmit(person);
   setPerson({ name: "", job: "" });
 }
